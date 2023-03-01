@@ -1,2 +1,0 @@
-/Users/nikitakurkurin/Unity/Test1/obj/Debug/UnityEditor.UI.csproj.AssemblyReference.cache
-/Users/nikitakurkurin/Unity/Test1/obj/Debug/UnityEditor.UI.csproj.CoreCompileInputs.cache
