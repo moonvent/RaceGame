@@ -41,7 +41,10 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets/Scripts/CarControl.cs" />
+     <Compile Include="Assets/Scripts/UserControl/CarControl.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/Accelaration.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/Wheels.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/Car.cs" />
      <Reference Include="UnityEngine">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.19f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/Variations/mono/Managed/UnityEngine.dll</HintPath>
      </Reference>
