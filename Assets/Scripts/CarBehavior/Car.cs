@@ -1,50 +1,25 @@
+using System;
 using UnityEngine;
 
 namespace CarBehavior
 {
-    
     public class Car
     {
-        // conventional accelaration units
-        private const float MaxAccelarationPoint = 500000f;
-        private const float TurnSensitivity = 1f;
-        private const float MaxSteerAngle = 45f; // degrees
         
-        private Wheels _wheels;
-        
+        private Wheels Wheels { get; set; }
+        public Riding Riding { get; private set; }
+
         public Car(GameObject carObject)
         {
-            _wheels = new Wheels(carObject);
-            // _accelaration = new Accelaration(_wheels);
+            // params for current only one car
+            // carObject.GetComponents<CarParams>();
+            Wheels = new Wheels(carObject);
+            Riding = new Riding(Wheels, carObject.GetComponent<CarParams>());
         }
-        
-        public void Move(float inputPower)
-        {
-            foreach (Wheel wheel in _wheels.WheelsArray)
-            {
-                if (wheel.axel == Axel.Rear) // rwd
-                {
-                    wheel.collider.motorTorque = inputPower * MaxAccelarationPoint * Time.deltaTime;
-                }
-            }
-        }
-        
-        public void Turn(float inputPower)
-        {
-            foreach (Wheel wheel in _wheels.WheelsArray)
-            {
-                if (wheel.axel == Axel.Front)
-                {
-                    float steerAngle = inputPower * TurnSensitivity * MaxSteerAngle;
-                    // wheel.collider.steerAngle = Mathf.Lerp(wheel.collider.steerAngle, _steerAngle, 1f);
-                    wheel.collider.steerAngle = steerAngle;
-                }
-            }
-        }
-        
+
         public void AnimateWheels()
         {
-            foreach (Wheel wheel in _wheels.WheelsArray)
+            foreach (Wheel wheel in Wheels.WheelsArray)
             {
                 Quaternion _rot;
                 Vector3 _pos;

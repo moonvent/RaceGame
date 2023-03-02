@@ -41,10 +41,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets/Scripts/UserControl/CarControl.cs" />
-     <Compile Include="Assets/Scripts/CarBehavior/Accelaration.cs" />
      <Compile Include="Assets/Scripts/CarBehavior/Wheels.cs" />
+     <Compile Include="Assets/Scripts/UserControl/CarControl.cs" />
      <Compile Include="Assets/Scripts/CarBehavior/Car.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/Riding.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/CarParams.cs" />
      <Folder Include="Assets" />
      <None Include="Library/PackageCache/com.unity.collab-proxy@2.0.0/Lib/Editor/PlasticSCM/localization/mergetool.ja.txt" />
      <None Include="Library/PackageCache/com.unity.collab-proxy@2.0.0/Lib/Editor/PlasticSCM/localization/images.zh-Hans.txt" />

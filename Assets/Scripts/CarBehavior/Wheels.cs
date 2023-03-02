@@ -34,8 +34,11 @@ namespace CarBehavior
         public Transform WheelsModels { get; private set; }
         
         private const int AmountWheels = 4;
+        private const int OneAxelAmountWheels = 2;
 
         public Wheel[] WheelsArray = new Wheel[AmountWheels];
+        public Wheel[] RearWheelsArray = new Wheel[OneAxelAmountWheels];
+        public Wheel[] FrontWheelsArray = new Wheel[OneAxelAmountWheels];
 
         private void InitializeWheelsColliders(GameObject carObject)
         {
@@ -69,6 +72,12 @@ namespace CarBehavior
             WheelsArray[1] = _frontRightWheel;
             WheelsArray[2] = _rearLeftWheel;
             WheelsArray[3] = _rearRightWheel;
+            
+            FrontWheelsArray[0] = _frontLeftWheel;
+            FrontWheelsArray[1] = _frontRightWheel;
+            
+            RearWheelsArray[0] = _rearLeftWheel;
+            RearWheelsArray[1] = _rearRightWheel;
         }
 
         /// <summary>

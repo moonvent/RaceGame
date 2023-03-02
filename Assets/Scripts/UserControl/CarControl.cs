@@ -27,8 +27,8 @@ namespace UserControl
         
         private void LateUpdate()
         {
-            _car.Move(_inputAcceleration);
-            _car.Turn(_inputTurn);
+            _car.Riding.Move(_inputAcceleration);
+            _car.Riding.Turn(_inputTurn);
         }
 
     }
