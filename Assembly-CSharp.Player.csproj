@@ -46,6 +46,8 @@
      <Compile Include="Assets/Scripts/CarBehavior/Car.cs" />
      <Compile Include="Assets/Scripts/CarBehavior/Riding.cs" />
      <Compile Include="Assets/Scripts/CarBehavior/CarParams.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/PowerDistribution.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/Moving.cs" />
      <Reference Include="UnityEngine">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.19f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/Variations/mono/Managed/UnityEngine.dll</HintPath>
      </Reference>

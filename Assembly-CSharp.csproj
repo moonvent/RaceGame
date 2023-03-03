@@ -46,6 +46,8 @@
      <Compile Include="Assets/Scripts/CarBehavior/Car.cs" />
      <Compile Include="Assets/Scripts/CarBehavior/Riding.cs" />
      <Compile Include="Assets/Scripts/CarBehavior/CarParams.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/PowerDistribution.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/Moving.cs" />
      <Folder Include="Assets" />
      <None Include="Library/PackageCache/com.unity.collab-proxy@2.0.0/Lib/Editor/PlasticSCM/localization/mergetool.ja.txt" />
      <None Include="Library/PackageCache/com.unity.collab-proxy@2.0.0/Lib/Editor/PlasticSCM/localization/images.zh-Hans.txt" />

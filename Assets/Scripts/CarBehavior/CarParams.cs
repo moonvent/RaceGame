@@ -1,11 +1,16 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CarBehavior
 {
     public class CarParams: MonoBehaviour
     {
-        [SerializeField] protected internal WheelDriveType WdWheelDriveType; // wheel drive type of current car
-        [SerializeField] protected internal float FirstAxelPower = 0;
-        [SerializeField] protected internal float SecondAxelPower = 0;
+        [FormerlySerializedAs("WheelDriveType")] [SerializeField] protected internal WheelDriveType wdWheelDriveType = WheelDriveType.Awd; // wheel drive type of current car
+        [FormerlySerializedAs("FirstAxelPower")] [SerializeField] protected internal float firstAxelPower = 50;
+        [FormerlySerializedAs("SecondAxelPower")] [SerializeField] protected internal float secondAxelPower = 50;
+        [FormerlySerializedAs("Mass")] [SerializeField] protected internal int mass = 1500;
+        [FormerlySerializedAs("SteeringCurve")] [SerializeField] protected internal AnimationCurve steeringCurve;
+
+        protected internal Rigidbody Rb;
     }
 }

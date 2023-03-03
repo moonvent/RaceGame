@@ -8,13 +8,19 @@ namespace CarBehavior
         
         private Wheels Wheels { get; set; }
         public Riding Riding { get; private set; }
+        private Rigidbody _rb;
+        private CarParams _carParams;
 
         public Car(GameObject carObject)
         {
-            // params for current only one car
-            // carObject.GetComponents<CarParams>();
+            _rb = carObject.GetComponent<Rigidbody>();
+            _rb.mass = carObject.GetComponent<CarParams>().mass;
+            
+            _carParams = carObject.GetComponent<CarParams>();
+            _carParams.Rb = _rb;
+            
             Wheels = new Wheels(carObject);
-            Riding = new Riding(Wheels, carObject.GetComponent<CarParams>());
+            Riding = new Riding(Wheels, _carParams);
         }
 
         public void AnimateWheels()
