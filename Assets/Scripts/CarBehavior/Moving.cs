@@ -5,7 +5,6 @@ namespace CarBehavior
     /// </summary>
     public abstract class Moving: PowerDistribution
     {
-        protected Wheels Wheels { get; set; }
         public delegate void _Move(float inputPower);
 
         public _Move Move { get; private set; }
@@ -33,7 +32,8 @@ namespace CarBehavior
         
         private void MoveFwd(float inputPower)
         {
-            ChangeAxelPower(maxPower: CalculateMaxPower(inputPower: inputPower), Wheels.FrontWheelsArray);
+            ChangeAxelPower(maxPower: CalculateMaxPower(inputPower: inputPower), 
+                Wheels.FrontWheelsArray);
         }
         
         private void MoveAwd(float inputPower)

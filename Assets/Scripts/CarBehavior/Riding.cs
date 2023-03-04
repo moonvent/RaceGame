@@ -35,9 +35,7 @@ namespace CarBehavior
         public void Turn(float inputPower)
         {
             foreach (Wheel wheel in Wheels.FrontWheelsArray)
-            {
                 wheel.collider.steerAngle = inputPower * MaxSteerAngle * steeringCurve.Evaluate(Rb.velocity.magnitude);
-            }
         }
     }   
 }
