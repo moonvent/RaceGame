@@ -6,10 +6,15 @@ namespace CarBehavior
     public abstract class PowerDistribution: CarParams
     {
         protected Wheels Wheels { get; set; }
+        
         // conventional accelaration units
         private const float MaxAccelarationPoint = 500000f;
-        private const float MaxBrakePowerMultiplier = 10;
-        private const float MaxBrakePowerCoef = 10;
+        
+        private const float BrakePowerMultiplier = 10;
+        private const float BrakePowerCoef = 10;
+        private readonly double _brakeCoef = Math.Pow(BrakePowerCoef, BrakePowerMultiplier);
+        
+        private const float SpeedLevelForChangeDirection = 0.1f;
         
         private bool _carDirectionForward = true;
         
@@ -22,6 +27,7 @@ namespace CarBehavior
         {
             if (maxPower > 0)
             {
+                // if user press accelaration button
                 if (!_carDirectionForward)
                 {
                     // if move backward and just use a brake
@@ -29,16 +35,21 @@ namespace CarBehavior
                 }
                 else
                 {
+                    Brake(0, Wheels.WheelsArray);
                     Accelarate(maxPower, accelarationWheels);
                 }
             }
             else if (maxPower < 0)
             {
+                // if user press brake / back button
                 if (_carDirectionForward)
                     // if move forward and just use a brake
                     _carDirectionForward = !ChangeMoveDirection(maxPower, accelarationWheels);
                 else
+                {
+                    Brake(0, Wheels.WheelsArray);
                     Accelarate(maxPower, accelarationWheels);
+                }
             }
             else
             {
@@ -56,7 +67,7 @@ namespace CarBehavior
         /// <returns></returns>
         private bool ChangeMoveDirection(float maxPower, Wheel[] accelarationWheels)
         {
-            if (Rb.velocity.magnitude > 0.1f)
+            if (Rb.velocity.magnitude > SpeedLevelForChangeDirection)
             {
                 Brake(maxPower, Wheels.WheelsArray);
                 Accelarate(0, accelarationWheels);
@@ -75,17 +86,17 @@ namespace CarBehavior
                 ChangeMotorTorqueOnWheel(maxPower, wheel);
         }
         
-        private void Brake(float maxPower, Wheel[] accelarationWheels)
+        private void Brake(double maxPower, Wheel[] accelarationWheels)
         {
             maxPower = maxPower > 0 ? maxPower : -maxPower;
             foreach (Wheel wheel in accelarationWheels)
-                ChangeBrakeTorqueOnWheel(maxPower * Math.Pow(MaxBrakePowerCoef, MaxBrakePowerMultiplier), wheel);
+                ChangeBrakeTorqueOnWheel(maxPower * _brakeCoef, wheel);
         }
 
         private void ClearPowerFromAxel(Wheel[] accelarationWheels)
         {
             Accelarate(0, accelarationWheels);
-            Brake(0, accelarationWheels);
+            Brake(0, Wheels.WheelsArray);
         }
     }
 }
