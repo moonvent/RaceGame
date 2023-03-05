@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace CarBehavior
@@ -10,8 +11,6 @@ namespace CarBehavior
         public Riding Riding { get; private set; }
         private Rigidbody _rb;
         private CarParams _carParams;
-        
-        private const float MinLimitSpeedOfAnimateWheel = 0.1f;
 
         public Car(GameObject carObject)
         {
@@ -29,18 +28,17 @@ namespace CarBehavior
         {
             foreach (Wheel wheel in Wheels.WheelsArray)
             {
-                if (_carParams.Rb.velocity.magnitude > MinLimitSpeedOfAnimateWheel)
-                {
-                    Quaternion _rot;
-                    Vector3 _pos;
-                    
-                    wheel.collider.GetWorldPose(out _pos, out _rot);
-    
-                    Transform wheelModelTransform = wheel.model.transform;
-                    
-                    wheelModelTransform.position = _pos;
-                    wheelModelTransform.rotation = _rot;    
-                }
+                Quaternion _rot;
+                Vector3 _pos;
+                
+                wheel.collider.GetWorldPose(out _pos, out _rot);
+
+                Transform wheelModelTransform = wheel.model.transform;
+
+                wheelModelTransform.rotation = _rot;
+                
+                // Debug.Log(_carParams.Rb.velocity.magnitude);
+                // wheelModelTransform.position = _pos;
             }    
         }
     }

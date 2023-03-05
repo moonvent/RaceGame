@@ -8,14 +8,14 @@ namespace CarBehavior
         protected Wheels Wheels { get; set; }
         
         // conventional accelaration units
-        private const float MaxAccelarationPoint = 500000f;
+        private const float MaxAccelarationPoint = 300f;
         
         private const float BrakePowerMultiplier = 10;
         private const float BrakePowerCoef = 10;
         private readonly double _brakeCoef = Math.Pow(BrakePowerCoef, BrakePowerMultiplier);
-        
+
         private const float SpeedLevelForChangeDirection = 0.1f;
-        
+
         private bool _carDirectionForward = true;
         
         protected float CalculateMaxPower(float inputPower) => inputPower * MaxAccelarationPoint;
@@ -96,6 +96,7 @@ namespace CarBehavior
         private void ClearPowerFromAxel(Wheel[] accelarationWheels)
         {
             Accelarate(0, accelarationWheels);
+            Brake(0, Wheels.WheelsArray);
             Brake(0, Wheels.WheelsArray);
         }
     }
