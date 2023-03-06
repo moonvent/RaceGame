@@ -97,7 +97,6 @@ namespace CarBehavior
         {
             Accelarate(0, accelarationWheels);
             Brake(0, Wheels.WheelsArray);
-            Brake(0, Wheels.WheelsArray);
         }
     }
 }

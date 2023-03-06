@@ -30,8 +30,8 @@ namespace CarBehavior
         private const string WheelsCollidersObjectTitle = "WheelsColliders";
         private const string WheelsModelsObjectTitle = "WheelsModels";
         
-        public Transform WheelsColliders { get; private set; }
-        public Transform WheelsModels { get; private set; }
+        private Transform WheelsColliders { get; set; }
+        private Transform WheelsModels { get; set; }
         
         private const int AmountWheels = 4;
         private const int OneAxelAmountWheels = 2;
@@ -85,7 +85,7 @@ namespace CarBehavior
         /// </summary>
         /// <param name="carObject">prefab/cars/anyCar</param>
         /// <exception cref="MissingReferenceException">Thrown when didn't have a wheels.</exception>
-        public void InitializeWheels(GameObject carObject)
+        private void InitializeWheels(GameObject carObject)
         {
             try
             {
@@ -102,9 +102,21 @@ namespace CarBehavior
             }
         }
 
-        public Wheels (GameObject carObject)
+        private void SetSuspencion(int wheelSpring, int wheelDump)
+        {
+            JointSpring jointSpring = new JointSpring();
+            jointSpring.spring = wheelSpring;
+            jointSpring.damper = wheelDump;
+            jointSpring.targetPosition = 0.5f;
+            
+            foreach (Wheel wheel in WheelsArray)
+                wheel.collider.suspensionSpring = jointSpring;
+        }
+        
+        public Wheels (GameObject carObject, int wheelSpring, int wheelDump)
         {
             InitializeWheels(carObject);
+            SetSuspencion(wheelSpring, wheelDump);
         }
         
     }

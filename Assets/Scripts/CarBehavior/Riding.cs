@@ -34,8 +34,13 @@ namespace CarBehavior
 
         public void Turn(float inputPower)
         {
+            // Debug.Log($"{Rb.velocity.magnitude} // {steeringCurve.Evaluate(Rb.velocity.magnitude)}");
+            float turnAngle = inputPower * MaxSteerAngle * steeringCurve.Evaluate(Rb.velocity.magnitude);
             foreach (Wheel wheel in Wheels.FrontWheelsArray)
-                wheel.collider.steerAngle = inputPower * MaxSteerAngle * steeringCurve.Evaluate(Rb.velocity.magnitude);
+            {
+                // wheel.collider.steerAngle = turnAngle;
+                wheel.collider.steerAngle = Mathf.Lerp(wheel.collider.steerAngle, turnAngle, 0.5f);
+            }
         }
     }   
 }

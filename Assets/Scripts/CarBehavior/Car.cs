@@ -20,7 +20,7 @@ namespace CarBehavior
             _carParams = carObject.GetComponent<CarParams>();
             _carParams.Rb = _rb;
             
-            Wheels = new Wheels(carObject);
+            Wheels = new Wheels(carObject, _carParams.wheelSpring, _carParams.wheelDump);
             Riding = new Riding(Wheels, _carParams);
         }
 
@@ -33,11 +33,7 @@ namespace CarBehavior
                 
                 wheel.collider.GetWorldPose(out _pos, out _rot);
 
-                Transform wheelModelTransform = wheel.model.transform;
-
-                wheelModelTransform.rotation = _rot;
-                
-                // Debug.Log(_carParams.Rb.velocity.magnitude);
+                wheel.model.transform.rotation = _rot;
                 // wheelModelTransform.position = _pos;
             }    
         }
