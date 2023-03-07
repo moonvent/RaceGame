@@ -42,5 +42,11 @@ namespace CarBehavior
                 wheel.collider.steerAngle = Mathf.Lerp(wheel.collider.steerAngle, turnAngle, 0.5f);
             }
         }
+        
+        public void HandBrake(bool activeHandBrake)
+        {
+            if (activeHandBrake)
+                HandBrake();
+        }
     }   
 }

@@ -9,12 +9,12 @@ namespace CarBehavior
         
         // conventional accelaration units
         private const float MaxAccelarationPoint = 300f;
-        
-        private const float BrakePowerMultiplier = 10;
-        private const float BrakePowerCoef = 10;
-        private readonly double _brakeCoef = Math.Pow(BrakePowerCoef, BrakePowerMultiplier);
+        private const float BrakeCoefMultiplier = 8f;
+        private const float HandBrakePower = 100000f;
 
         private const float SpeedLevelForChangeDirection = 0.1f;
+
+        private const float NoPower = 0;
 
         private bool _carDirectionForward = true;
         
@@ -25,37 +25,35 @@ namespace CarBehavior
 
         protected void ChangeAxelPower(float maxPower, Wheel[] accelarationWheels)
         {
-            if (maxPower > 0)
+            if (maxPower > NoPower)
             {
                 // if user press accelaration button
                 if (!_carDirectionForward)
-                {
                     // if move backward and just use a brake
                     _carDirectionForward = ChangeMoveDirection(maxPower, accelarationWheels);
-                }
                 else
-                {
-                    Brake(0, Wheels.WheelsArray);
-                    Accelarate(maxPower, accelarationWheels);
-                }
+                    AccelarateAfterBrakes(maxPower, accelarationWheels);
             }
-            else if (maxPower < 0)
+            else if (maxPower < NoPower)
             {
                 // if user press brake / back button
                 if (_carDirectionForward)
                     // if move forward and just use a brake
                     _carDirectionForward = !ChangeMoveDirection(maxPower, accelarationWheels);
                 else
-                {
-                    Brake(0, Wheels.WheelsArray);
-                    Accelarate(maxPower, accelarationWheels);
-                }
+                    AccelarateAfterBrakes(maxPower, accelarationWheels);
             }
             else
             {
                 // if user not press the button
                 ClearPowerFromAxel(accelarationWheels);
             }
+        }
+
+        private void AccelarateAfterBrakes(float maxPower, Wheel[] accelarationWheels)
+        {
+            Brake(NoPower, Wheels.WheelsArray);
+            Accelarate(maxPower, accelarationWheels);
         }
 
         /// <summary>
@@ -70,12 +68,12 @@ namespace CarBehavior
             if (Rb.velocity.magnitude > SpeedLevelForChangeDirection)
             {
                 Brake(maxPower, Wheels.WheelsArray);
-                Accelarate(0, accelarationWheels);
+                Accelarate(NoPower, accelarationWheels);
                 return false;
             }
             else
             {
-                Brake(0, Wheels.WheelsArray);
+                Brake(NoPower, Wheels.WheelsArray);
                 return true;
             }
         }
@@ -86,17 +84,29 @@ namespace CarBehavior
                 ChangeMotorTorqueOnWheel(maxPower, wheel);
         }
         
+        /// <summary>
+        /// Brakes system, work on all wheels
+        /// </summary>
+        /// <param name="maxPower"></param>
+        /// <param name="accelarationWheels"></param>
         private void Brake(double maxPower, Wheel[] accelarationWheels)
         {
-            maxPower = maxPower > 0 ? maxPower : -maxPower;
+            maxPower = maxPower > NoPower ? maxPower : -maxPower;
             foreach (Wheel wheel in accelarationWheels)
-                ChangeBrakeTorqueOnWheel(maxPower * _brakeCoef, wheel);
+                ChangeBrakeTorqueOnWheel(maxPower * BrakeCoefMultiplier, wheel);
+        }
+
+        protected void HandBrake()
+        {
+            Accelarate(NoPower, Wheels.WheelsArray);
+            foreach (Wheel wheel in Wheels.RearWheelsArray)
+                ChangeBrakeTorqueOnWheel(HandBrakePower, wheel);
         }
 
         private void ClearPowerFromAxel(Wheel[] accelarationWheels)
         {
-            Accelarate(0, accelarationWheels);
-            Brake(0, Wheels.WheelsArray);
+            Accelarate(NoPower, accelarationWheels);
+            Brake(NoPower, Wheels.WheelsArray);
         }
     }
 }
