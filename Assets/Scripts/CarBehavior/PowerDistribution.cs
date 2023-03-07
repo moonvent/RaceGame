@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace CarBehavior
@@ -11,6 +10,10 @@ namespace CarBehavior
         private const float MaxAccelarationPoint = 300f;
         private const float BrakeCoefMultiplier = 8f;
         private const float HandBrakePower = 100000f;
+
+        protected bool IsHandBrake = false;
+        private const float ActiveHandBrakeStiffnes = 1.5f;
+        private const float InactiveHandBrakeStiffnes = 1f;
 
         private const float SpeedLevelForChangeDirection = 0.1f;
 
@@ -96,11 +99,25 @@ namespace CarBehavior
                 ChangeBrakeTorqueOnWheel(maxPower * BrakeCoefMultiplier, wheel);
         }
 
+        protected void SetupNewSuspensionForHandBrake(bool resetStiffnes = false)
+        {
+            float newStiffness = resetStiffnes ? InactiveHandBrakeStiffnes : ActiveHandBrakeStiffnes;
+            
+            foreach (Wheel wheel in Wheels.FrontWheelsArray)
+            {
+                WheelFrictionCurve wfc = wheel.collider.sidewaysFriction;
+                wfc.stiffness = newStiffness;
+                wheel.collider.sidewaysFriction = wfc;
+            }
+
+            IsHandBrake = !resetStiffnes;
+        }
+
         protected void HandBrake()
         {
-            Accelarate(NoPower, Wheels.WheelsArray);
-            foreach (Wheel wheel in Wheels.RearWheelsArray)
-                ChangeBrakeTorqueOnWheel(HandBrakePower, wheel);
+            if (!IsHandBrake) SetupNewSuspensionForHandBrake();
+            
+            Brake(HandBrakePower, Wheels.RearWheelsArray);
         }
 
         private void ClearPowerFromAxel(Wheel[] accelarationWheels)

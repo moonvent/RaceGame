@@ -47,6 +47,8 @@ namespace CarBehavior
         {
             if (activeHandBrake)
                 HandBrake();
+            else if (IsHandBrake)
+                SetupNewSuspensionForHandBrake(true);
         }
     }   
 }
