@@ -4,13 +4,14 @@ using UnityEngine;
 namespace UserControl
 {
 
-    public class CarControl : MonoBehaviour
+    public class CarControl : CarParams
     {
         private Car _car;
         private float _inputTurn, _inputAcceleration;
         private bool _inputHandBrake = false;
         private void Awake()
         {
+            gameObject.AddComponent<Rigidbody>();
             _car = new Car(gameObject);
         }
         

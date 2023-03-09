@@ -12,8 +12,10 @@ namespace CarBehavior
         private const float HandBrakePower = 100000f;
 
         protected bool IsHandBrake = false;
-        private const float ActiveHandBrakeStiffnes = 1.5f;
-        private const float InactiveHandBrakeStiffnes = 1f;
+        private const float ActiveHandBrakeStiffnessOnFront = 1.5f;
+        private const float InactiveHandBrakeStiffnessOnFront = 1f;
+        private const float ActiveHandBrakeStiffnessOnRear = 0.75f;
+        private const float InactiveHandBrakeStiffnessOnRear = 1f;
 
         private const float SpeedLevelForChangeDirection = 0.1f;
 
@@ -101,13 +103,23 @@ namespace CarBehavior
 
         protected void SetupNewSuspensionForHandBrake(bool resetStiffnes = false)
         {
-            float newStiffness = resetStiffnes ? InactiveHandBrakeStiffnes : ActiveHandBrakeStiffnes;
-            
-            foreach (Wheel wheel in Wheels.FrontWheelsArray)
+            float newStiffnessOnFront = resetStiffnes ? InactiveHandBrakeStiffnessOnFront : ActiveHandBrakeStiffnessOnFront;
+            float newStiffnessOnRear = resetStiffnes ? InactiveHandBrakeStiffnessOnRear : ActiveHandBrakeStiffnessOnRear;
+
+            foreach (Wheel wheel in Wheels.WheelsArray)
             {
-                WheelFrictionCurve wfc = wheel.collider.sidewaysFriction;
-                wfc.stiffness = newStiffness;
-                wheel.collider.sidewaysFriction = wfc;
+                if (wheel.axel == Axel.Front)
+                {
+                    WheelFrictionCurve wfc = wheel.collider.sidewaysFriction;
+                    wfc.stiffness = newStiffnessOnFront;
+                    wheel.collider.sidewaysFriction = wfc;
+                }
+                else
+                {
+                    WheelFrictionCurve wfc = wheel.collider.forwardFriction;
+                    wfc.stiffness = newStiffnessOnRear;
+                    wheel.collider.forwardFriction = wfc;
+                }
             }
 
             IsHandBrake = !resetStiffnes;
