@@ -40,7 +40,8 @@ namespace CarBehavior
             Rb = carParams.Rb;
             steeringCurve = carParams.steeringCurve;
             wdWheelDriveType = carParams.wdWheelDriveType;
-            
+            gearsPower = carParams.gearsPower;
+
             SetupWheelDriveType();
         }
 
@@ -61,6 +62,15 @@ namespace CarBehavior
                 HandBrake();
             else if (IsHandBrake)
                 SetupNewSuspensionForHandBrake(true);
+        }
+        
+        public void GearUp()
+        {
+            if (CurrentGear < gearsPower.Count - 1) CurrentGear += 1;
+        }
+        public void GearDown()
+        {
+            if (CurrentGear > -1) CurrentGear -= 1;
         }
     }   
 }

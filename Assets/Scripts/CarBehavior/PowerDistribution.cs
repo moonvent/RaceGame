@@ -1,12 +1,15 @@
+using System;
 using UnityEngine;
 
 namespace CarBehavior
 {
     public abstract class PowerDistribution: CarParams
     {
+        protected int CurrentGear = 1;
+
         protected Wheels Wheels { get; set; }
-        
-        // conventional accelaration units
+
+        private const float MaxSpeedFullPercantage = 100f;
         private const float BrakeCoefMultiplier = 8f;
         private const float HandBrakePower = 100000f;
 
@@ -18,34 +21,67 @@ namespace CarBehavior
 
         private const float SpeedLevelForChangeDirection = 0.1f;
 
-        private const float NoPower = 0;
+        private const float NoPower = 0f;
+        private const float BackPowerInPercentOfMax = 20f;
+
+        private const int BackGear = -1;
+        private const int NeutralGear = 0;
 
         private bool _carDirectionForward = true;
-        
-        protected float CalculateMaxPower(float inputPower) => inputPower * maxSpeed;
-        
-        private void ChangeMotorTorqueOnWheel(float inputPower, Wheel wheel) => wheel.collider.motorTorque = inputPower;
+
+        protected float CalculateMaxPower(float inputPower)
+        {
+            return inputPower * maxSpeed;   
+        }
+
+        private void ChangeMotorTorqueOnWheel(float inputPower, Wheel wheel) => wheel.collider.motorTorque = inputPower * Math.Sign(CurrentGear);
         private void ChangeBrakeTorqueOnWheel(double inputPower, Wheel wheel) => wheel.collider.brakeTorque = (float)inputPower;
 
+        // /// <summary>
+        // /// Add power to wheel colliders (old style, without transmission)
+        // /// </summary>
+        // /// <param name="maxPower">power of user input (0.0-1.0)</param>
+        // /// <param name="accelarationWheels">run wheels</param>
+        // protected void ChangeAxelPower(float maxPower, Wheel[] accelarationWheels)
+        // {
+        //     
+        //     if (maxPower > NoPower)
+        //     {
+        //         // if user press accelaration button
+        //         if (!_carDirectionForward)
+        //             // if move backward and just use a brake
+        //             _carDirectionForward = ChangeMoveDirection(maxPower, accelarationWheels);
+        //         else
+        //             AccelarateAfterBrakes(maxPower, accelarationWheels);
+        //     }
+        //     else if (maxPower < NoPower)
+        //     {
+        //         // if user press brake / back button
+        //         if (_carDirectionForward)
+        //             // if move forward and just use a brake
+        //             _carDirectionForward = !ChangeMoveDirection(maxPower, accelarationWheels);
+        //         else
+        //             AccelarateAfterBrakes(maxPower, accelarationWheels);
+        //     }
+        //     else
+        //     {
+        //         // if user not press the button
+        //         ClearPowerFromAxel(accelarationWheels);
+        //     }
+        // }
+        
+        /// <summary>
+        /// Add power to wheel colliders (NEW style, WITh transmission)
+        /// </summary>
+        /// <param name="maxPower">power of user input (0.0-1.0)</param>
+        /// <param name="accelarationWheels">run wheels</param>
         protected void ChangeAxelPower(float maxPower, Wheel[] accelarationWheels)
         {
+            
             if (maxPower > NoPower)
             {
                 // if user press accelaration button
-                if (!_carDirectionForward)
-                    // if move backward and just use a brake
-                    _carDirectionForward = ChangeMoveDirection(maxPower, accelarationWheels);
-                else
-                    AccelarateAfterBrakes(maxPower, accelarationWheels);
-            }
-            else if (maxPower < NoPower)
-            {
-                // if user press brake / back button
-                if (_carDirectionForward)
-                    // if move forward and just use a brake
-                    _carDirectionForward = !ChangeMoveDirection(maxPower, accelarationWheels);
-                else
-                    AccelarateAfterBrakes(maxPower, accelarationWheels);
+                AccelarateAfterBrakes(maxPower, accelarationWheels);
             }
             else
             {
@@ -81,11 +117,25 @@ namespace CarBehavior
                 return true;
             }
         }
+
+        private float GetGearPower()
+        {
+            switch (CurrentGear)
+            {
+                case BackGear:
+                    return BackPowerInPercentOfMax;
+                case NeutralGear:
+                    return NoPower;
+                default:
+                    return gearsPower[CurrentGear - 1];
+            }
+        }
         
         private void Accelarate(float maxPower, Wheel[] accelarationWheels)
         {
+            float availablePower = maxSpeed / MaxSpeedFullPercantage * maxPower * GetGearPower();
             foreach (Wheel wheel in accelarationWheels)
-                ChangeMotorTorqueOnWheel(maxPower, wheel);
+                ChangeMotorTorqueOnWheel(availablePower, wheel);
         }
         
         /// <summary>

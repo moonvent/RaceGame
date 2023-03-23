@@ -27,17 +27,17 @@ namespace CarBehavior
 
         private void MoveRwd(float inputPower)
         {
-            ChangeAxelPower(maxPower: CalculateMaxPower(inputPower: inputPower), Wheels.RearWheelsArray);
+            ChangeAxelPower(maxPower: inputPower, Wheels.RearWheelsArray);
         }
         
         private void MoveFwd(float inputPower)
         {
-            ChangeAxelPower(maxPower: CalculateMaxPower(inputPower: inputPower), Wheels.FrontWheelsArray);
+            ChangeAxelPower(maxPower: inputPower, Wheels.FrontWheelsArray);
         }
         
         private void MoveAwd(float inputPower)
         {
-            float maxPower = CalculateMaxPower(inputPower: inputPower);
+            float maxPower = inputPower;
             float powerOnFrontAxel = firstAxelPower / 100 * maxPower;
             float powerOnRearAxel = maxPower - powerOnFrontAxel;
             

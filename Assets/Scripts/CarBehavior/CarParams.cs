@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -34,6 +35,9 @@ namespace CarBehavior
         protected internal int wheelDump = 9000;
         [FormerlySerializedAs("MaxSpeed"), SerializeField, Tooltip("Max speed in kilometrs")] 
         protected internal float maxSpeed = 300f;
+
+        [FormerlySerializedAs("GearsPower"), SerializeField, Tooltip("Amount gears and gear power (in percent), maximum in sum of elements 100")]
+        protected internal List<float> gearsPower = new List<float>();
 
         protected internal Rigidbody Rb;
     }
