@@ -20,6 +20,18 @@ namespace CarBehavior
         
         public Riding(Wheels wheels, CarParams carParams)
         {
+            InitializeRidingObject(wheels, carParams);
+        }
+        
+        /// <summary>
+        /// need for inheritance
+        /// </summary>
+        protected Riding()
+        {
+        }
+
+        protected void InitializeRidingObject(Wheels wheels, CarParams carParams)
+        {
             Wheels = wheels;
 
             firstAxelPower = carParams.firstAxelPower;

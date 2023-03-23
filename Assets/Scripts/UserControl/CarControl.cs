@@ -30,9 +30,9 @@ namespace UserControl
         
         private void FixedUpdate()
         {
-            _car.Riding.Move(_inputAcceleration);
-            _car.Riding.Turn(_inputTurn);
-            _car.Riding.HandBrake(_inputHandBrake);
+            _car.Move(_inputAcceleration);
+            _car.Turn(_inputTurn);
+            _car.HandBrake(_inputHandBrake);
         }
 
     }

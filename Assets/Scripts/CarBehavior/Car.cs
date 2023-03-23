@@ -4,27 +4,31 @@ using UnityEngine;
 
 namespace CarBehavior
 {
-    public class Car
+    public class Car: Riding
     {
-        
-        private Wheels Wheels { get; set; }
-        public Riding Riding { get; private set; }
-        public Rigidbody _rb;
-        private CarParams _carParams;
 
-        public Car(GameObject carObject)
+        public Car(GameObject carObject) : base()
         {
-            _rb = carObject.GetComponent<Rigidbody>();
-            _rb.mass = carObject.GetComponent<CarParams>().mass;
+            CarParams carParams = carObject.GetComponent<CarParams>();
+            SetupRigidBody(carObject, carParams);
+            SetupWheels(carObject, carParams);
 
-            _carParams = carObject.GetComponent<CarParams>();
-            _carParams.Rb = _rb;
-            var rbCenterOfMass = _rb.centerOfMass;
+            InitializeRidingObject(Wheels, carParams);
+        }
+
+        private void SetupRigidBody(GameObject carObject, CarParams carParams)
+        {
+            Rigidbody rb = carObject.GetComponent<Rigidbody>();
+            rb.mass = carParams.mass;
+            carParams.Rb = rb;
+            Vector3 rbCenterOfMass = rb.centerOfMass;
             rbCenterOfMass.y -= 0.1f;
-            _rb.centerOfMass = rbCenterOfMass;
-            
-            Wheels = new Wheels(carObject, _carParams.wheelSpring, _carParams.wheelDump);
-            Riding = new Riding(Wheels, _carParams);
+            rb.centerOfMass = rbCenterOfMass;
+        }
+        
+        private void SetupWheels(GameObject carObject, CarParams carParams)
+        {
+            Wheels = new Wheels(carObject, carParams.wheelSpring, carParams.wheelDump);
         }
 
         public void AnimateWheels()
