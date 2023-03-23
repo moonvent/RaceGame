@@ -7,7 +7,6 @@ namespace CarBehavior
         protected Wheels Wheels { get; set; }
         
         // conventional accelaration units
-        private const float MaxAccelarationPoint = 300f;
         private const float BrakeCoefMultiplier = 8f;
         private const float HandBrakePower = 100000f;
 
@@ -23,7 +22,7 @@ namespace CarBehavior
 
         private bool _carDirectionForward = true;
         
-        protected float CalculateMaxPower(float inputPower) => inputPower * MaxAccelarationPoint;
+        protected float CalculateMaxPower(float inputPower) => inputPower * maxSpeed;
         
         private void ChangeMotorTorqueOnWheel(float inputPower, Wheel wheel) => wheel.collider.motorTorque = inputPower;
         private void ChangeBrakeTorqueOnWheel(double inputPower, Wheel wheel) => wheel.collider.brakeTorque = (float)inputPower;

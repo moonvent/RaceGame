@@ -28,7 +28,7 @@ namespace UserControl
             _inputHandBrake = Input.GetKey(KeyCode.Space);
         }
         
-        private void LateUpdate()
+        private void FixedUpdate()
         {
             _car.Riding.Move(_inputAcceleration);
             _car.Riding.Turn(_inputTurn);
