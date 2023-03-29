@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 
@@ -14,7 +15,7 @@ namespace CarBehavior
     /// <summary>
     /// All riding logic, accelaration/brakes/turning/other
     /// </summary>
-    public class Riding: Moving
+    public class Riding: PowerDistribution
     {
         private const float MaxSteerAngle = 45f;                           // degrees
         
@@ -34,15 +35,34 @@ namespace CarBehavior
         {
             Wheels = wheels;
 
-            firstAxelPower = carParams.firstAxelPower;
-            secondAxelPower = carParams.secondAxelPower;
+            // firstAxelPower = carParams.firstAxelPower;
+            // secondAxelPower = carParams.secondAxelPower;
             mass = carParams.mass;
             Rb = carParams.Rb;
             steeringCurve = carParams.steeringCurve;
             wdWheelDriveType = carParams.wdWheelDriveType;
             gearsPower = carParams.gearsPower;
+            maxSpeed = carParams.maxSpeed;
+            enginePower = carParams.enginePower;
+            engineRpm = carParams.engineRpm;
+            CalculateMaxWheelTorqueForGear();
 
-            SetupWheelDriveType();
+            // SetupWheelDriveType();
+        }
+
+        private void CalculateMaxWheelTorqueForGear()
+        {
+            // gearsPower.
+            float oneSpeedPeriod = maxSpeed / gearsPower.Count;
+            
+            GearsSpeeds = new GearSpeeds(maxSpeed, gearsPower.Count, enginePower);
+            
+            for (int i = 0; i < gearsPower.Count; i++)
+            {
+                GearsSpeeds.SetNewGearSpeed(minSpeed: oneSpeedPeriod * i, 
+                    maxSpeed: oneSpeedPeriod * i + oneSpeedPeriod,
+                    gear: i);
+            }
         }
 
         public void Turn(float inputPower)
@@ -66,11 +86,19 @@ namespace CarBehavior
         
         public void GearUp()
         {
-            if (CurrentGear < gearsPower.Count - 1) CurrentGear += 1;
+            if (CurrentGear < gearsPower.Count - 1)
+            {
+                CurrentGear += 1;
+                Debug.Log($"Gear up, current gear {CurrentGear}");
+            }
         }
         public void GearDown()
         {
-            if (CurrentGear > -1) CurrentGear -= 1;
+            if (CurrentGear > -1)
+            {
+                CurrentGear -= 1;
+                Debug.Log($"Gear down, current gear {CurrentGear}");
+            }
         }
     }   
 }

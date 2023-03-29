@@ -28,7 +28,7 @@ namespace CarBehavior
         
         private void SetupWheels(GameObject carObject, CarParams carParams)
         {
-            Wheels = new Wheels(carObject, carParams.wheelSpring, carParams.wheelDump);
+            Wheels = new Wheels(carObject, carParams.wheelSpring, carParams.wheelDump, carParams.wdWheelDriveType);
         }
 
         public void AnimateWheels()

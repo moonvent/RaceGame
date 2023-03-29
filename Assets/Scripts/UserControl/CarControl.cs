@@ -23,9 +23,22 @@ namespace UserControl
         
         private void GetInputs()
         {
-            _inputTurn = Input.GetAxis("Horizontal");
-            _inputAcceleration = Input.GetAxis("Vertical");
+            if (Input.GetKey(KeyCode.LeftArrow))
+                _inputTurn = -1;
+            else if (Input.GetKey(KeyCode.RightArrow))
+                _inputTurn = 1;
+            else
+                _inputTurn = 0;
+            
+            if (Input.GetKey(KeyCode.UpArrow))
+                _inputAcceleration = 1;
+            else if (Input.GetKey(KeyCode.DownArrow))
+                _inputAcceleration = -1;
+            else
+                _inputAcceleration = 0;
+            
             _inputHandBrake = Input.GetKey(KeyCode.Space);
+            
             if (Input.GetKeyDown(KeyCode.A) && !_gearUp) _gearUp = true;
             if (Input.GetKeyDown(KeyCode.Z) && !_gearDown) _gearDown = true;
         }

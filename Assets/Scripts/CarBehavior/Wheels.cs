@@ -37,8 +37,11 @@ namespace CarBehavior
         private const int OneAxelAmountWheels = 2;
 
         public Wheel[] WheelsArray = new Wheel[AmountWheels];
+        public Wheel[] AllWheelsArray = new Wheel[AmountWheels];
         public Wheel[] RearWheelsArray = new Wheel[OneAxelAmountWheels];
         public Wheel[] FrontWheelsArray = new Wheel[OneAxelAmountWheels];
+
+        public Wheel[] AccelatationWheels;
 
         private void InitializeWheelsColliders(GameObject carObject)
         {
@@ -72,6 +75,8 @@ namespace CarBehavior
             WheelsArray[1] = _frontRightWheel;
             WheelsArray[2] = _rearLeftWheel;
             WheelsArray[3] = _rearRightWheel;
+
+            AllWheelsArray = WheelsArray;
             
             FrontWheelsArray[0] = _frontLeftWheel;
             FrontWheelsArray[1] = _frontRightWheel;
@@ -112,11 +117,28 @@ namespace CarBehavior
             foreach (Wheel wheel in WheelsArray)
                 wheel.collider.suspensionSpring = jointSpring;
         }
+
+        private void InitAddAccelarationWheels(WheelDriveType wheelDriveType)
+        {
+            switch (wheelDriveType)
+            {
+                case WheelDriveType.Awd:
+                    AccelatationWheels = WheelsArray;
+                    return;
+                case WheelDriveType.Rwd:
+                    AccelatationWheels = RearWheelsArray;
+                    return;
+                case WheelDriveType.Fwd:
+                    AccelatationWheels = FrontWheelsArray;
+                    return;
+            }
+        }
         
-        public Wheels (GameObject carObject, int wheelSpring, int wheelDump)
+        public Wheels (GameObject carObject, int wheelSpring, int wheelDump, WheelDriveType wheelDriveType)
         {
             InitializeWheels(carObject);
             SetSuspencion(wheelSpring, wheelDump);
+            InitAddAccelarationWheels(wheelDriveType);
         }
         
     }

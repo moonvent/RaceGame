@@ -43,6 +43,7 @@
   <ItemGroup>
      <Compile Include="Assets/Scripts/CarBehavior/Wheels.cs" />
      <Compile Include="Assets/Sun_Temple/Scripts/Culling/DistanceHide.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/ChangeWheelTorque.cs" />
      <Compile Include="Assets/Bolide347/Scripts/SuspensionTraction.cs" />
      <Compile Include="Assets/APC Military Vehicle-Mobile/camara3d/Scripts/Camera/CameraOrbit.cs" />
      <Compile Include="Assets/VRoad/Scripts/uk/vroad/xmpl/UBotHandlerExample.cs" />
@@ -53,7 +54,6 @@
      <Compile Include="Assets/Flooded_Grounds/PostProcessing/Runtime/Utils/MaterialFactory.cs" />
      <Compile Include="Assets/VRoad/Scripts/uk/vroad/ucm/AnimatorPedEventReceiver.cs" />
      <Compile Include="Assets/Flooded_Grounds/PostProcessing/Runtime/Components/ScreenSpaceReflectionComponent.cs" />
-     <Compile Include="Assets/Scripts/CarBehavior/Moving.cs" />
      <Compile Include="Assets/VRoad/Scripts/uk/vroad/ucm/TypeSpecTruck.cs" />
      <Compile Include="Assets/SimplePoly - Town Pack/DemoScene/FlyCamera.cs" />
      <Compile Include="Assets/Sun_Temple/Scripts/Doors/Door.cs" />
@@ -166,6 +166,7 @@
      <Compile Include="Assets/Flooded_Grounds/Scripts/FPSDisplay.cs" />
      <Compile Include="Assets/VRoad/Scripts/uk/vroad/ucm/ReadOnlyDrawer.cs" />
      <Compile Include="Assets/Flooded_Grounds/PostProcessing/Runtime/Models/AntialiasingModel.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/AccelarationAndBraking.cs" />
      <Compile Include="Assets/Flooded_Grounds/PostProcessing/Runtime/Models/DitheringModel.cs" />
      <Reference Include="UnityEngine">
      <HintPath>/Volumes/KINGSTON/Unity/2021.3.20f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/Variations/mono/Managed/UnityEngine.dll</HintPath>
