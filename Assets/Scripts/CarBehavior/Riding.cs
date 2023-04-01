@@ -45,24 +45,8 @@ namespace CarBehavior
             maxSpeed = carParams.maxSpeed;
             enginePower = carParams.enginePower;
             engineRpm = carParams.engineRpm;
-            CalculateMaxWheelTorqueForGear();
-
-            // SetupWheelDriveType();
-        }
-
-        private void CalculateMaxWheelTorqueForGear()
-        {
-            // gearsPower.
-            float oneSpeedPeriod = maxSpeed / gearsPower.Count;
             
-            GearsSpeeds = new GearSpeeds(maxSpeed, gearsPower.Count, enginePower);
-            
-            for (int i = 0; i < gearsPower.Count; i++)
-            {
-                GearsSpeeds.SetNewGearSpeed(minSpeed: oneSpeedPeriod * i, 
-                    maxSpeed: oneSpeedPeriod * i + oneSpeedPeriod,
-                    gear: i);
-            }
+            GearsSwitch = new GearSwitch(maxSpeed, gearsPower.Count, enginePower); 
         }
 
         public void Turn(float inputPower)

@@ -6,59 +6,6 @@ using UnityEngine.Serialization;
 
 namespace CarBehavior
 {
-    public class GearSpeeds
-    {
-        private float[] _minSpeeds;
-        private float[] _maxSpeeds;
-
-        private float _maxSpeed;
-        private float _amountGears;
-
-        private float _oneSpeedPeriod;
-
-        private float _motorTorque;
-
-        private float _speedByOneUnit;      // скорость одного км в час в процентах
-
-        public GearSpeeds(float maxSpeed, int amountGears, float motorTorque)
-        {
-            _maxSpeed = maxSpeed;
-            _amountGears = amountGears;
-            _oneSpeedPeriod = maxSpeed / amountGears;
-            _motorTorque = motorTorque;
-            _speedByOneUnit = _oneSpeedPeriod / 100;
-
-            _minSpeeds = new float[amountGears];
-            _maxSpeeds = new float[amountGears];
-        }
-
-        public void SetNewGearSpeed(float maxSpeed, float minSpeed, int gear)
-        {
-            _minSpeeds[gear] = minSpeed;
-            _maxSpeeds[gear] = maxSpeed;
-        }
-
-        public float getOneSpeedPeriod()
-        {
-            return _oneSpeedPeriod;
-        }
-
-        public float getMaxSpeedByGear(int gear)
-        {
-            return _maxSpeeds[gear];
-        }
-        
-        public float getMinSpeedByGear(int gear)
-        {
-            return _minSpeeds[gear];
-        }
-
-        public float getMotorTorqueByCurrentSpeed(float currentGearSpeed)
-        {
-            float motorPowerInPercent = currentGearSpeed * _speedByOneUnit;
-            return _motorTorque / 100 * motorPowerInPercent;
-        }
-    }
     public class CarParams: MonoBehaviour
     {
         static Keyframe[] _steeringKeyframes = new Keyframe[]
@@ -101,7 +48,7 @@ namespace CarBehavior
         [FormerlySerializedAs("GearsPower"), SerializeField, Tooltip("Amount gears and gear power (in percent), maximum in sum of elements 100")]
         protected internal List<float> gearsPower = new List<float>();
 
-        protected internal GearSpeeds GearsSpeeds;
+        protected internal GearSwitch GearsSwitch;
         protected internal Rigidbody Rb;
     }
 }

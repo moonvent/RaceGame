@@ -17,14 +17,7 @@ namespace CarBehavior
             //                                                    / 2));
 
             // Debug.Log(Rb.velocity.sqrMagnitude);
-            Debug.Log(inputPower);
-            if (inputPower != 0)
-            {
-                float currentGearSpeed = GearsSpeeds.getOneSpeedPeriod() -
-                                         (Rb.velocity.sqrMagnitude - GearsSpeeds.getMinSpeedByGear(CurrentGear));
-                wheel.collider.motorTorque = GearsSpeeds.getMotorTorqueByCurrentSpeed(currentGearSpeed);
-            }
-            else wheel.collider.motorTorque = 0f;
+            wheel.collider.motorTorque = inputPower != 0 ? GearsSwitch.GetMotorTorqueByCurrentData(Rb.velocity.sqrMagnitude, CurrentGear) : 0f;
         }
 
         protected void ChangeBrakeTorque(Wheel wheel, float inputPower = UsualBrakesPower) => wheel.collider.brakeTorque = inputPower;

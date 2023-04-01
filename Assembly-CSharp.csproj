@@ -128,6 +128,7 @@
      <Compile Include="Assets/Bolide347/Demo/Cam.cs" />
      <Compile Include="Assets/Flooded_Grounds/PostProcessing/Runtime/Components/GrainComponent.cs" />
      <Compile Include="Assets/SimplePoly - Town Pack/Standard Assets/Effects/ImageEffects/Scripts/PostEffectsBase.cs" />
+     <Compile Include="Assets/Scripts/CarBehavior/GearSwitch.cs" />
      <Compile Include="Assets/Flooded_Grounds/Scripts/WaterFloat.cs" />
      <Compile Include="Assets/Flooded_Grounds/PostProcessing/Runtime/Models/UserLutModel.cs" />
      <Compile Include="Assets/Arcade Racing Cars/Pickup Jeep/Demo/Scripts/DemoCarController.cs" />
