@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using UnityEngine;
+
 namespace CarBehavior
 {
     public class GearSwitch
@@ -8,11 +12,14 @@ namespace CarBehavior
         private float _maxSpeed;
         private float _amountGears;
 
-        private float _oneSpeedPeriod;
+        private float _oneSpeedPeriod;      // один скоростной период
 
         private float _motorTorque;
 
-        private float _speedByOneUnit;      // скорость одного км в час в процентах
+        private float _speedByOneUnit;                // скорость одного км в час в процентах
+        
+        private float _currentGearSpeed;              // текущая скорость для передачи
+        private float _minGearSpeedForCurrentGear;    // минимальная скорость для текущей передачи
 
         private const int ConvertToPercent = 100;
 
@@ -48,9 +55,25 @@ namespace CarBehavior
         
         private float GetMinSpeedByGear(int gear)
         {
-            return _minSpeeds[gear];
+            return _minSpeeds[gear - 1];
+        }
+        
+        private int GetGearByMinSpeed(float speed)
+        {
+            for (int i = _minSpeeds.Length - 1; i >= 0; i--)
+            {
+                if (speed > _minSpeeds[i])
+                    return i + 1;
+            }
+
+            return 0;
         }
 
+        /// <summary>
+        /// Рассчитываем мощь которую подавать на колёса
+        /// </summary>
+        /// <param name="currentGearSpeed">скорость на которую нужно ещё разогнаться, чем меньше тем меньше подаем мощности на колеса</param>
+        /// <returns></returns>
         private float GetMotorTorqueByCurrentSpeed(float currentGearSpeed)
         {
             float motorPowerInPercent = currentGearSpeed * _speedByOneUnit;
@@ -61,12 +84,29 @@ namespace CarBehavior
 
         public float GetMotorTorqueByCurrentData(float currentSpeed, int currentGear)
         {
-            float currentGearSpeed;
-            if (currentGear > -1)
-                currentGearSpeed = _oneSpeedPeriod - (currentSpeed - GetMinSpeedByGear(currentGear));
-            else 
-                currentGearSpeed = -_oneSpeedPeriod - (currentSpeed - GetMinSpeedByGear(0));
-            return GetMotorTorqueByCurrentSpeed(currentGearSpeed);
+            if (currentGear > 0)
+            {
+                // для всех кроме задней и нейтралки
+                _minGearSpeedForCurrentGear = GetMinSpeedByGear(currentGear);
+                
+                if (currentSpeed > _minGearSpeedForCurrentGear)
+                    _currentGearSpeed = _oneSpeedPeriod - (currentSpeed - GetMinSpeedByGear(currentGear));
+                else
+                {
+                    _currentGearSpeed = (float)((GetMinSpeedByGear(currentGear) + currentSpeed) /
+                                                Math.Pow(GetGearByMinSpeed(currentSpeed) - currentGear, 2));
+                }
+                
+                Debug.Log(_currentGearSpeed);
+            }               
+            else if (currentGear == -1)
+                // для задней передачи 
+                _currentGearSpeed = -_oneSpeedPeriod - (currentSpeed - GetMinSpeedByGear(0));
+            else
+                // для нейтралки
+                return 0;
+
+            return GetMotorTorqueByCurrentSpeed(_currentGearSpeed);
         }
     }
 }

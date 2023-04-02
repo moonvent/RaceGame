@@ -8,7 +8,7 @@ namespace UserControl
     {
         private Car _car;
         private float _inputTurn, _inputAcceleration;
-        private bool _inputHandBrake = false, _gearUp = false, _gearDown = false;
+        private bool _inputHandBrake = false, _gearUp = false, _gearDown = false, _inputClutch = false;
         private void Awake()
         {
             gameObject.AddComponent<Rigidbody>();
@@ -38,6 +38,7 @@ namespace UserControl
                 _inputAcceleration = 0;
             
             _inputHandBrake = Input.GetKey(KeyCode.Space);
+            _inputClutch = Input.GetKey(KeyCode.LeftControl);
             
             if (Input.GetKeyDown(KeyCode.A) && !_gearUp) _gearUp = true;
             if (Input.GetKeyDown(KeyCode.Z) && !_gearDown) _gearDown = true;
@@ -48,15 +49,19 @@ namespace UserControl
             _car.Move(_inputAcceleration);
             _car.Turn(_inputTurn);
             _car.HandBrake(_inputHandBrake);
-            if (_gearUp)
+            
+            if (_inputClutch)
             {
-                _car.GearUp();
-                _gearUp = false;
-            }
-            else if (_gearDown)
-            {
-                _car.GearDown();
-                _gearDown = false;
+                if ( _gearUp)
+                {
+                    _car.GearUp();
+                    _gearUp = false;
+                }
+                else if (_gearDown)
+                {
+                    _car.GearDown();
+                    _gearDown = false;
+                }    
             }
         }
 
