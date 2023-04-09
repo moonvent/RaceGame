@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Race/Race.uss?fileID=7433441132597879392&amp;guid=62e898967fc924d43b1a2e7296259d34&amp;type=3#Race" />
+    <ui:VisualElement name="ui" class="race_panel" style="flex-grow: 1; width: 100%; height: 100%;">
+        <ui:VisualElement name="ui__top_row" class="row" />
+        <ui:VisualElement name="ui__second_row" class="row" style="flex-grow: 1; height: 50%;">
+            <ui:VisualElement name="map" style="flex-grow: 1; width: 50%;" />
+            <ui:VisualElement name="speedometer" class="speedometer" style="width: 50%; flex-grow: 1; flex-direction: row;">
+                <ui:VisualElement name="speedometer__data" class="speedometer__data" style="justify-content: space-between; flex-grow: 0; width: 100%; opacity: 1; visibility: visible; overflow: visible; align-items: flex-end;">
+                    <ui:VisualElement name="left_part" style="flex-direction: row; height: 61px;">
+                        <ui:ProgressBar value="30" name="speedometer__power" style="transform-origin: center; height: 61px; width: 300px; font-size: 50px; flex-grow: 0; min-width: auto; justify-content: center; max-height: none; max-width: 90%;" />
+                        <ui:Label text="6" display-tooltip-when-elided="true" name="speedometer__gear" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="right_part" style="flex-direction: row; height: 61px;">
+                        <ui:Label text="300" display-tooltip-when-elided="true" name="speedometer__value" style="height: 61px;" />
+                        <ui:Label text="km/h&#10;" display-tooltip-when-elided="true" name="speedometer__units" style="flex-shrink: 0; height: 61px; -unity-font: url(&apos;project://database/Assets/UI/Roboto-Black.ttf?fileID=12800000&amp;guid=b3949d257c2d44e6abd9bd59b016e4da&amp;type=3#Roboto-Black&apos;);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

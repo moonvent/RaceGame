@@ -1,5 +1,6 @@
 using CarBehavior;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace UserControl
 {
@@ -9,10 +10,13 @@ namespace UserControl
         private Car _car;
         private float _inputTurn, _inputAcceleration;
         private bool _inputHandBrake = false, _gearUp = false, _gearDown = false, _inputClutch = false;
+
         private void Awake()
         {
             gameObject.AddComponent<Rigidbody>();
+            
             _car = new Car(gameObject);
+            CarUI = new CarUI(gameObject, _car.GearsSwitch.OneSpeedPeriod);
         }
         
         public void Update()
@@ -46,6 +50,7 @@ namespace UserControl
         
         private void FixedUpdate()
         {
+            CarUI.UpdateSpeedometer(speedValue: Rb.velocity.sqrMagnitude, powerValue: _car.GearsSwitch.CurrentPowerToWheels, currentGear: _car.CurrentGear);
             _car.Move(_inputAcceleration);
             _car.Turn(_inputTurn);
             _car.HandBrake(_inputHandBrake);

@@ -12,7 +12,7 @@ namespace CarBehavior
         private float _maxSpeed;
         private float _amountGears;
 
-        private float _oneSpeedPeriod;      // один скоростной период
+        public float OneSpeedPeriod;      // один скоростной период
 
         private float _motorTorque;
 
@@ -22,14 +22,18 @@ namespace CarBehavior
         private float _minGearSpeedForCurrentGear;    // минимальная скорость для текущей передачи
 
         private const int ConvertToPercent = 100;
+        private const int ConvertToPercentForSpeedometerBar = 1000;
+        private const int ConvertToPercentForSpeedometerBarWithBraking = 100;
+
+        public float CurrentPowerToWheels = 0;
 
         public GearSwitch(float maxSpeed, int amountGears, float motorTorque)
         {
             _maxSpeed = maxSpeed;
             _amountGears = amountGears;
-            _oneSpeedPeriod = maxSpeed / amountGears;
+            OneSpeedPeriod = maxSpeed / amountGears;
             _motorTorque = motorTorque;
-            _speedByOneUnit = _oneSpeedPeriod / ConvertToPercent;
+            _speedByOneUnit = OneSpeedPeriod / ConvertToPercent;
 
             _minSpeeds = new float[amountGears];
             _maxSpeeds = new float[amountGears];
@@ -41,8 +45,8 @@ namespace CarBehavior
         {
             for (int i = 0; i < _amountGears; i++)
             {
-                SetNewGearSpeed(minSpeed: _oneSpeedPeriod * i, 
-                    maxSpeed: _oneSpeedPeriod * i + _oneSpeedPeriod,
+                SetNewGearSpeed(minSpeed: OneSpeedPeriod * i, 
+                    maxSpeed: OneSpeedPeriod * i + OneSpeedPeriod,
                     gear: i);
             }
         }
@@ -82,29 +86,43 @@ namespace CarBehavior
                    * motorPowerInPercent;
         }
 
+        private float CalculateCurrentGearSpeed(float currentSpeed, int currentGear)
+        {
+            _minGearSpeedForCurrentGear = GetMinSpeedByGear(currentGear);
+            
+            if (currentSpeed > _minGearSpeedForCurrentGear)
+                _currentGearSpeed = OneSpeedPeriod - (currentSpeed - GetMinSpeedByGear(currentGear));
+            else
+            {
+                _currentGearSpeed = (float)((GetMinSpeedByGear(currentGear) + currentSpeed) /
+                                            Math.Pow(GetGearByMinSpeed(currentSpeed) - currentGear, 2));
+            }
+
+            return _currentGearSpeed;
+        }
+
+        public void ResetPowerAfterAccelerate(bool braking = false)
+        {
+            int percentConvertValue = braking ? ConvertToPercentForSpeedometerBarWithBraking : ConvertToPercentForSpeedometerBar;
+            CurrentPowerToWheels = CurrentPowerToWheels > 0 ? CurrentPowerToWheels - OneSpeedPeriod / percentConvertValue : 0;
+        }
+        
         public float GetMotorTorqueByCurrentData(float currentSpeed, int currentGear)
         {
             if (currentGear > 0)
-            {
                 // для всех кроме задней и нейтралки
-                _minGearSpeedForCurrentGear = GetMinSpeedByGear(currentGear);
-                
-                if (currentSpeed > _minGearSpeedForCurrentGear)
-                    _currentGearSpeed = _oneSpeedPeriod - (currentSpeed - GetMinSpeedByGear(currentGear));
-                else
-                {
-                    _currentGearSpeed = (float)((GetMinSpeedByGear(currentGear) + currentSpeed) /
-                                                Math.Pow(GetGearByMinSpeed(currentSpeed) - currentGear, 2));
-                }
-                
-                Debug.Log(_currentGearSpeed);
-            }               
+                _currentGearSpeed = CalculateCurrentGearSpeed(currentSpeed, currentGear);
             else if (currentGear == -1)
                 // для задней передачи 
-                _currentGearSpeed = -_oneSpeedPeriod - (currentSpeed - GetMinSpeedByGear(0));
+                // _currentGearSpeed = -OneSpeedPeriod - (currentSpeed - GetMinSpeedByGear(1));
+                _currentGearSpeed = -CalculateCurrentGearSpeed(currentSpeed, 1);
             else
+            {
                 // для нейтралки
+                CurrentPowerToWheels = OneSpeedPeriod;
                 return 0;
+            }
+            CurrentPowerToWheels = OneSpeedPeriod - Math.Abs(_currentGearSpeed);
 
             return GetMotorTorqueByCurrentSpeed(_currentGearSpeed);
         }

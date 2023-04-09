@@ -169,6 +169,7 @@
      <Compile Include="Assets/Flooded_Grounds/PostProcessing/Runtime/Models/AntialiasingModel.cs" />
      <Compile Include="Assets/Scripts/CarBehavior/AccelarationAndBraking.cs" />
      <Compile Include="Assets/Flooded_Grounds/PostProcessing/Runtime/Models/DitheringModel.cs" />
+     <Compile Include="Assets/UI/Race/CarUI.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/RPG_FPS_game_assets_industrial/Textures/Concrete_wall/UNIConcrete_walls/UNIConcrete_wall_v1" />
      <Folder Include="Assets/JP Environmental Asset Pack/Materials/Foliage 3" />
@@ -440,6 +441,7 @@
      <Folder Include="Assets/JP Environmental Asset Pack/Textures" />
      <Folder Include="Assets/Fantasy Forest Environment Free Sample/Scenes" />
      <None Include="Assets/KajamansRoads/FileNamesDescription.txt" />
+     <None Include="Assets/UI/Race/Race.uss" />
      <Folder Include="Assets/mountain-race-track/Standard Assets/ParticleSystems/Materials" />
      <Folder Include="Assets/POLYGON city pack/Meshes,textures/Letters FBX" />
      <Folder Include="Assets/VRoad/Osm2VRoad/osx/Data/Resources" />
@@ -498,6 +500,7 @@
      <None Include="Assets/Flooded_Grounds/PostProcessing/Resources/Shaders/LutGen.shader" />
      <Folder Include="Assets/Modern_Touring_Carpack_Demo/Materials/FocE" />
      <Folder Include="Assets/Supercyan Free Forest Sample/Textures/Tree/Fir" />
+     <Folder Include="Assets/UI" />
      <Folder Include="Assets/SimplePoly - Town Pack/Prefabs" />
      <Folder Include="Assets/EmaceArt/Slavic World Free/Prefabs" />
      <None Include="Assets/VRoad/Models/MapMeshes/MapMesh_README.txt" />
@@ -618,6 +621,7 @@
      <Folder Include="Assets/Favoured Cars Pack - Low Poly (FREE)/Materials/CarBody" />
      <Folder Include="Assets/milltype/MyTown" />
      <Folder Include="Assets/VRoad/Osm2VRoad/linux/Osm2VRoadLite_Data" />
+     <Folder Include="Assets/UI Toolkit" />
      <Folder Include="Assets/LowPolyVehicle2/Prefabs" />
      <Folder Include="Assets/SteamPunk_Kart/Textures" />
      <Folder Include="Assets/Customizable_cars_pack_style1/Models/Weapon/Weapon_v2" />
@@ -1605,6 +1609,7 @@
      <Folder Include="Assets/Supercyan Free Forest Sample/Prefabs/Mobile/Tree/Leaf/Normal" />
      <Folder Include="Assets/KajamansRoads/Free/Prefabs" />
      <Folder Include="Assets/Customizable_cars_pack_style1/Models/Cars/Pickup/Pickup_v1/Source" />
+     <None Include="Assets/UI/Race/Race.uxml" />
      <Folder Include="Assets/KajamansRoads/Materials" />
      <Folder Include="Assets/FreeCars/Exotic_1/Documentation" />
      <Folder Include="Assets/HousePack/Models/House5" />
@@ -1639,6 +1644,7 @@
      <Folder Include="Assets/LowpolyStreetPack/Prefabs/Roads/Bridges/Elements" />
      <Folder Include="Assets/RPG_FPS_game_assets_industrial/Buildings/Industrial/Hangars/Hangar_v5" />
      <Folder Include="Assets/Classic_car_1955/Car_materials/car_exterior" />
+     <Folder Include="Assets/UI Toolkit/UnityThemes" />
      <Folder Include="Assets/asset_free_Ukraine_cars" />
      <Folder Include="Assets/Arcade Racing Cars/Pickup Jeep/Demo/LWRP" />
      <None Include="Library/PackageCache/com.unity.collab-proxy@2.0.1/Lib/Editor/PlasticSCM/localization/semantic.ja.txt" />
@@ -1892,6 +1898,7 @@
      <Folder Include="Assets/Lowpoly_Sports_Car_2_in_1/prefabs" />
      <Folder Include="Library/PackageCache/com.unity.visualscripting@1.8.0/Editor" />
      <Folder Include="Assets/EmaceArt/Slavic World Free/Prefabs/Nature/Plant" />
+     <Folder Include="Assets/UI/Race" />
      <Folder Include="Assets/Sport Car - 3D model/Flares/Textures" />
      <None Include="Library/PackageCache/com.unity.collab-proxy@2.0.1/Lib/Editor/PlasticSCM/localization/i3.ja.txt" />
      <Folder Include="Assets/Low_Poly_Mini_Village/Art/Meshes" />

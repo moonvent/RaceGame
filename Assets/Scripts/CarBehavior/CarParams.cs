@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UIElements;
 
 namespace CarBehavior
 {
@@ -47,8 +49,10 @@ namespace CarBehavior
 
         [FormerlySerializedAs("GearsPower"), SerializeField, Tooltip("Amount gears and gear power (in percent), maximum in sum of elements 100")]
         protected internal List<float> gearsPower = new List<float>();
-
+        
         protected internal GearSwitch GearsSwitch;
         protected internal Rigidbody Rb;
+        protected internal CarUI CarUI;
+
     }
 }
