@@ -3,3 +3,4 @@ Game develope in:
 2) IDE Rider 2022.3.2
 
 Current game state (actual on 09.04.2023):
+https://youtu.be/JNPYS77XRcA
