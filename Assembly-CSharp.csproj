@@ -170,6 +170,7 @@
      <Compile Include="Assets/Scripts/CarBehavior/AccelarationAndBraking.cs" />
      <Compile Include="Assets/Flooded_Grounds/PostProcessing/Runtime/Models/DitheringModel.cs" />
      <Compile Include="Assets/UI/Race/CarUI.cs" />
+     <Compile Include="Assets/Scripts/UserControl/SceneControl.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/RPG_FPS_game_assets_industrial/Textures/Concrete_wall/UNIConcrete_walls/UNIConcrete_wall_v1" />
      <Folder Include="Assets/JP Environmental Asset Pack/Materials/Foliage 3" />

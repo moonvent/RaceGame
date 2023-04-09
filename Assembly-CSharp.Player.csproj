@@ -170,6 +170,7 @@
      <Compile Include="Assets/Scripts/CarBehavior/AccelarationAndBraking.cs" />
      <Compile Include="Assets/Flooded_Grounds/PostProcessing/Runtime/Models/DitheringModel.cs" />
      <Compile Include="Assets/UI/Race/CarUI.cs" />
+     <Compile Include="Assets/Scripts/UserControl/SceneControl.cs" />
      <Reference Include="UnityEngine">
      <HintPath>/Volumes/KINGSTON/Unity/2021.3.20f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/Variations/mono/Managed/UnityEngine.dll</HintPath>
      </Reference>
